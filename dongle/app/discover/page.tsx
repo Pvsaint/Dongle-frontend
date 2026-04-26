@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useLayoutEffect } from "react";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import { mockProjects } from "@/data/mockProjects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
@@ -69,7 +69,8 @@ export default function DiscoverPage() {
   };
 
   // Reset pagination when filters change
-  React.useEffect(() => {
+  useLayoutEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisibleCount(ITEMS_PER_PAGE);
   }, [searchQuery, selectedCategory, sortBy]);
 

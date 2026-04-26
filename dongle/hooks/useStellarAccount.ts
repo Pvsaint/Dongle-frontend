@@ -16,13 +16,15 @@ interface UseStellarAccountReturn {
 /**
  * Custom hook to fetch and manage Stellar account data.
  * Automatically fetches account information when a wallet is connected.
- * 
+ *
  * @returns Account data, balances, loading state, error state, and refetch function
  */
 export function useStellarAccount(): UseStellarAccountReturn {
   const { publicKey, isConnected } = useWallet();
   const [account, setAccount] = useState<Horizon.AccountResponse | null>(null);
-  const [balances, setBalances] = useState<Horizon.HorizonApi.BalanceLine[] | null>(null);
+  const [balances, setBalances] = useState<
+    Horizon.HorizonApi.BalanceLine[] | null
+  >(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +44,8 @@ export function useStellarAccount(): UseStellarAccountReturn {
       setAccount(accountData);
       setBalances(accountData.balances);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to fetch account data";
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to fetch account data";
       setError(errorMessage);
       setAccount(null);
       setBalances(null);
@@ -53,6 +56,7 @@ export function useStellarAccount(): UseStellarAccountReturn {
   }, [publicKey, isConnected]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchAccountData();
   }, [fetchAccountData]);
 
